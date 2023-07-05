@@ -1,12 +1,12 @@
 <?php
 include '../database/db_config.php';
 
-if (isset($_POST['status'])) {
+if (isset($_POST['user_id'], $_POST['tanggal_awal'], $_POST['tanggal_akhir'])) {
     $user = $_POST['user_id'];
     $tanggal_awal = $_POST['tanggal_awal'];
     $tanggal_akhir = $_POST['tanggal_akhir'];
 
-    $querySQL = "SELECT * FROM `transactions` WHERE `user_id`=? AND date BETWEEN ? AND ?";
+    $querySQL = "SELECT * FROM `transactions` WHERE `user_id`=? AND date BETWEEN ? AND ? ORDER BY date DESC";
     $stmt = $conn->prepare($querySQL);
 
     if ($stmt) {
@@ -25,22 +25,19 @@ if (isset($_POST['status'])) {
             $myObj->status = 1;
             $myObj->message = "Get Transaksi Berhasil";
             $myObj->data = $rows;
-            echo json_encode($myObj);
         } else {
             $myObj = new stdClass();
-            $myObj->status = 1;
+            $myObj->status = 0;
             $myObj->message = "Tidak ada transaksi";
-            echo json_encode($myObj);
         }
     } else {
         $myObj = new stdClass();
         $myObj->status = 0;
         $myObj->message = "Error preparing statement for transaction: .$conn->error";
-        echo json_encode($myObj);
     }
 } else {
     $myObj = new stdClass();
     $myObj->status = 0;
-    $myObj->message = "Gagal mencari transaksi";
-    echo json_encode($myObj);
+    $myObj->message = "Gagal mencari transaksi. Parameter yang dibutuhkan tidak ada";
 }
+echo json_encode($myObj);
