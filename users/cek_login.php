@@ -17,7 +17,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     while ($row = mysqli_fetch_array($result)) {
 
       $item = array();
-      $item['id'] = $row['user_id'];
+      $item['user_id'] = $row['user_id'];
       $item['fullname'] = $row['fullname'];
       $item['email'] = $row['email'];
       $item['password'] = $row['password'];

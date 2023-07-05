@@ -1,16 +1,15 @@
 <?php
 include '../database/db_config.php';
 
-if (isset($_POST['user_id'], $_POST['tanggal_awal'], $_POST['tanggal_akhir'])) {
+if (isset($_POST['user_id'])) {
     $user = $_POST['user_id'];
-    $tanggal_awal = $_POST['tanggal_awal'];
-    $tanggal_akhir = $_POST['tanggal_akhir'];
+    // diganti dengan bulan
 
-    $querySQL = "SELECT * FROM `transactions` WHERE `user_id`=? AND date BETWEEN ? AND ? ORDER BY date DESC";
+    $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') ORDER BY date DESC";
     $stmt = $conn->prepare($querySQL);
 
     if ($stmt) {
-        $stmt->bind_param('iss', $user, $tanggal_awal, $tanggal_akhir);
+        $stmt->bind_param('i', $user);
         $stmt->execute();
 
         $result = $stmt->get_result();
