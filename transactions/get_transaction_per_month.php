@@ -3,9 +3,14 @@ include '../database/db_config.php';
 
 if (isset($_POST['user_id'])) {
     $user = $_POST['user_id'];
-    // diganti dengan bulan
 
-    $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') ORDER BY date DESC";
+    // diganti dengan bulan
+    if (isset($_POST['bulan'])) {
+        $bulan = $_POST['bulan'];
+        $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT($bulan, '%Y-%m') ORDER BY date DESC";
+    } else {
+        $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') ORDER BY date DESC";
+    }
     $stmt = $conn->prepare($querySQL);
 
     if ($stmt) {
