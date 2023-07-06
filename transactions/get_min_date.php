@@ -5,7 +5,7 @@ if (isset($_POST['user_id'])) {
     $user = $_POST['user_id'];
 
 
-    $querySQL = "SELECT COALESCE(MIN(YEAR(date)),0) as MIN_YEAR, COALESCE(MIN(MONTH(date)),0) as MIN_MONTH FROM `transactions` WHERE user_id=?";
+    $querySQL = "SELECT COALESCE(MIN(YEAR(date)),0) as MIN_YEAR, COALESCE(MAX(YEAR(date)),0) as MAX_YEAR, COALESCE(MIN(MONTH(date)),0) as MIN_MONTH FROM `transactions` WHERE user_id=?";
 
     $stmt = $conn->prepare($querySQL);
 
@@ -18,7 +18,7 @@ if (isset($_POST['user_id'])) {
         if ($result->num_rows > 0) {
             $rows = array();
             while ($row = $result->fetch_assoc()) {
-                if ($row['MIN_YEAR'] !== 0 || $row['MIN_MONTH'] !== 0) {
+                if ($row['MIN_YEAR'] !== 0 || $row['MIN_MONTH'] !== 0 || $row['MAX_YEAR'] !== 0) {
                     $rows[] = $row;
                     $kosong = false;
                 } else {

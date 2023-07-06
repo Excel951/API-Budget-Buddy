@@ -3,18 +3,22 @@ include '../database/db_config.php';
 
 if (isset($_POST['user_id'])) {
     $user = $_POST['user_id'];
+    $tanggal = $_POST['tanggal'];
 
     // diganti dengan bulan
-    if (isset($_POST['bulan'])) {
-        $bulan = $_POST['bulan'];
-        $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT($bulan, '%Y-%m') ORDER BY date DESC";
-    } else {
-        $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') ORDER BY date DESC";
-    }
+    // if ($_POST['tanggal'] != "null") {
+    $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT(?, '%Y-%m') ORDER BY date DESC";
+    // } else {
+    //     $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') ORDER BY date DESC";
+    // }
     $stmt = $conn->prepare($querySQL);
 
     if ($stmt) {
-        $stmt->bind_param('i', $user);
+        // if ($_POST['tanggal'] != "null") {
+        $stmt->bind_param('is', $user, $tanggal);
+        // } else {
+        //     $stmt->bind_param('i', $user);
+        // }
         $stmt->execute();
 
         $result = $stmt->get_result();
