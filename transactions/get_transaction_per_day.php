@@ -5,7 +5,7 @@ if (isset($_POST['user_id'])) {
     $user = $_POST['user_id'];
 
     // cari transaksi hari ini
-    $querySQL = "SELECT transaction_id, user_id, title, date, type, amount, COALESCE(additional_info, 'Kosong'), created_at FROM `transactions` WHERE user_id = 1 AND DATE_FORMAT(date, '%d') = DATE_FORMAT(CURRENT_DATE, '%d') ORDER BY date DESC";
+    $querySQL = "SELECT transaction_id, user_id, title, date, type, amount, COALESCE(additional_info, 'Kosong') AS 'additional_info', created_at FROM `transactions` WHERE user_id = 1 AND DATE_FORMAT(date, '%d') = DATE_FORMAT(CURRENT_DATE, '%d') ORDER BY date DESC";
     $stmt = $conn->prepare($querySQL);
 
     if ($stmt) {

@@ -2,7 +2,7 @@
 
 include "../database/db_config.php";
 
-if (isset($_POST["simpan"])) {
+// if (isset($_POST["simpan"])) {
   $response = array();
 
   if (isset($_POST["fullname"]) && isset($_POST["email"]) && isset($_POST["password"])) {
@@ -30,7 +30,7 @@ if (isset($_POST["simpan"])) {
     echo json_encode($response);
     exit();
   }
-}
+// }
 ?>
 
 <!DOCTYPE html>

@@ -7,7 +7,7 @@ if (isset($_POST['user_id'])) {
 
     // diganti dengan bulan
     // if ($_POST['tanggal'] != "null") {
-    $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT(?, '%Y-%m') ORDER BY date DESC";
+    $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT(?, '%Y-%m') ORDER BY date ASC";
     // } else {
     //     $querySQL = "SELECT * FROM `transactions` WHERE user_id=? AND DATE_FORMAT(date, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') ORDER BY date DESC";
     // }
